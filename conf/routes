@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Examples of controller that handle form submission & page rendering
+GET     /                           controllers.CampaignPageController.index
+POST     /                           controllers.CampaignPageController.finishedCampaign()
+GET     /listCampaign                           controllers.CampaignPageController.listAllCampaign()
+GET     /updateCampaign                           controllers.CampaignPageController.updateCampaign()
+GET     /deleteCampaign                           controllers.CampaignPageController.deleteCampaign()
+
+GET     /survey                           controllers.SurveyPageController.survey()
+POST    /survey								controllers.SurveyPageController.submitSurvey()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

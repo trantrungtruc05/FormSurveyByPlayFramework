@@ -1,0 +1,42 @@
+ @(info: forms.InfoCampaignForm)
+ @survey("Survey") {
+<h1>Survey</h1>
+
+<form method="post" action="@routes.SurveyPageController.submitSurvey()">
+<label>Question 1 : @info.getQuestion1()</label> <br/><br/>
+<input type="text" name="question1" value="@info.getQuestion1()" hidden="true">
+
+@if(info.getAnswer1().isEmpty == false){
+						@if(info.getType() == "1"){
+				<div id="answerRadio">
+				@for(ans1 <- info.getAnswer1()){
+				<div class="radio">
+					<label><input type="radio" name="answer1" value="@ans1">@ans1</label>
+				</div>
+				}
+				</div>
+				
+			}else{
+				<div id="answerCheckbox">
+					@for(ans1 <- info.getAnswer1()){
+						<label class="checkbox-inline"><input  type="checkbox" name="answer1" value="@ans1">@ans1</label>
+					}
+				</div>
+				
+			}
+					}else{
+						
+					}
+
+
+<label>Question 2 : @info.getQuestion2()</label> <br/><br/>
+<input type="text" name="question2" value="@info.getQuestion2()" hidden="true">
+<textarea rows="4" cols="50" name="answer2">
+</textarea>
+<br/><br/>
+
+
+ <input type="submit"  value="Submit" />
+</form>
+
+ }

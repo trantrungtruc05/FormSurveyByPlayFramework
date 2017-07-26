@@ -1,0 +1,123 @@
+@(campaign: dao.Campaign, info: forms.InfoCampaignForm, messages: List[String])
+@main("Create Campaign") {
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Campaign Form</h1>
+	</div>
+</div>
+
+<div class="row">
+	<form method="post" action="@routes.CampaignPageController.finishedCampaign()">
+		<div class="col-lg-12">
+			@if(!messages.isEmpty){
+				<div id="validation">
+				@for(mes <- messages){
+					<div class="alert alert-danger">@mes</div>
+				}
+			</div>
+			}else{
+			}
+			
+			
+			<div class="surveyName">
+				<div class="col-lg-6">
+					<input type="text" id="campaignName" class="form-control"
+						placeholder="Campaign Name" value="@campaign.getCampaignName()" name="campaignName">
+				</div>
+			</div>
+	
+			<div class="pageTitle">
+				<div class="col-lg-6">
+					<input type="text" id="pageTitle" class="form-control"
+						placeholder="Page Title" value="@campaign.getPageTitle()" name="pageTitle">
+					<input type="text" value="@campaign.getId()" name="id" hidden="true">
+				</div>
+			</div>
+	
+			<br />
+	
+			<div class="timeCampaign">
+				<div class="col-lg-3">
+					<label for="fromDate">From Date</label>
+					
+					<div class='input-group date' id='fromdatePicker'>
+						<input type='text' class="form-control" id="fromDate" value="@campaign.getFromDate()" name="fromDate"/> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</div>
+	
+				<div class="col-lg-3">
+					<label for="toDate">To Date</label>
+					<div class='input-group date' id='todatePicker'>
+						<input type='text' class="form-control" id="toDate" value = "@campaign.getToDate()" name="toDate"/> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span> </span>
+					</div>
+				</div>
+			</div>
+	
+			<div class="question"></div>
+	
+			<div class="question">
+				<div class="col-lg-6">
+					<div id="typeQuestion">
+						<label for="type">Type :</label> <select class="form-control"
+							id="type" onchange="doFunction();" name="type">
+							<option value=0>Choose ...</option>
+							<option value=1 @if(String.valueOf(1)==info.getType()){selected="selected"}>Single Select</option>
+							<option value=2 @if(String.valueOf(2)==info.getType()){selected="selected"}>Multi Select</option>
+						</select>
+					</div>
+					<br />
+					<div id="question1Div">
+						<label for="question1">Question 1 :</label> 
+						<input type="text" id="question1" class="form-control" placeholder="Question 1" value="@info.getQuestion1()" name="question1">
+						<label for="answer2">Answer:</label>
+						<div id="answer1">
+						@if(info.getAnswer1().isEmpty == false){
+							@if(info.getType() == "1"){
+					<div id="answerData">
+					@for(ans1 <- info.getAnswer1()){
+							<div class="radio" id="answer1[@info.getAnswer1().indexOf(ans1)]">
+						<label><input type="radio" name="optradio" value="opt1"><input
+							type="text" placeholder="Answer" value="@ans1" name="answer1[@info.getAnswer1().indexOf(ans1)]">
+							<a style="cursor: pointer;" id="answer1[@info.getAnswer1().indexOf(ans1)]">x</a></label>
+					</div>
+					}
+					</div>
+					<div class="radio"><a href="javascript:addAnswerRadio()">Add New</a></div>
+				}else{
+					<div id="answerData">
+						@for(ans1 <- info.getAnswer1()){
+							<label class="checkbox-inline" id="answer1[@info.getAnswer1().indexOf(ans1)]"><input type="checkbox" value="ckb1"><input type="text" placeholder="Answer" value="@ans1" name="answer1[@info.getAnswer1().indexOf(ans1)]">
+								<a style="cursor: pointer;" id="answer1[@info.getAnswer1().indexOf(ans1)]">x</a>
+							</label>
+						}
+					</div>
+					<a href="javascript:addAnswerCheckbox()">Add New</a>
+				}
+						}else{
+							
+						}
+					
+					
+				</div>
+					</div>
+					<hr />
+					<div id="question2Div">
+						<label for="question2">Question 2 :</label> <input type="text"
+							id="question2" class="form-control" placeholder="Question 2" value="@info.getQuestion2()" name="question2">
+					</div>
+					<br />
+					<input type="submit" class="btn btn-primary" value="Finish Campaign">
+					<br />
+				</div>
+			</div>
+			
+		</div>
+	</form>
+</div>
+
+<div class="footer"></div>
+}
